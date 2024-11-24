@@ -1,0 +1,73 @@
+<div class="container-fluid px-5">
+  <div class="row justify-content-end">
+    <div class="col-auto mt-2">
+      <div class="d-flex justify-content-center bg-light menu-btns">
+        <button routerLink="/add-record" class="btn btn-primary m-2">
+          Add
+        </button>
+        <button class="btn btn-primary m-2" (click)="openFileUploadDialog()">
+          .scv
+        </button>
+        <button class="btn btn-danger m-2" (click)="openDeleteDialog()">
+          Delete
+        </button>
+      </div>
+      <div class="card bg-light search mt-2">
+        <div class="card-body">
+          <form #searchForm="ngForm" (ngSubmit)="searchFormSubmit()">
+
+            <div class="d-flex justify-content-end">
+              <mat-checkbox [(ngModel)]="queryCheck" name="queryCheck"></mat-checkbox>
+              <mat-form-field appearance="outline">
+                <mat-label>Search request</mat-label>
+                <input matInput placeholder="Name or email" [disabled]="!queryCheck()" name="query" value="Sushi"
+                  [(ngModel)]="queryField">
+              </mat-form-field>
+            </div>
+            <div class="d-flex justify-content-end">
+              <mat-checkbox [(ngModel)]="ageCheck" name="ageCheck"></mat-checkbox>
+              <mat-form-field appearance="outline">
+                <mat-label>Age</mat-label>
+                <input [disabled]="!ageCheck()" matInput placeholder="" name="age" value="Sushi" [(ngModel)]="ageField">
+              </mat-form-field>
+            </div>
+            <div class="d-flex justify-content-end">
+              <mat-button-toggle-group [ngClass]="{'mat-button-toggle-group-disabled': !ageCheck()}"
+                [disabled]="!ageCheck()" [(ngModel)]="selectedValues" (change)="onAgeConditionsChange($event)"
+                class="square-toggle-group" name="conditions" aria-label="Conditions"
+                [hideMultipleSelectionIndicator]="true" multiple>
+                <mat-button-toggle [value]="Condition.Less">
+                  <mat-icon aria-hidden="false" aria-label="Less">arrow_back_ios</mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle [value]="Condition.Equal">
+                  <span class="material-symbols-outlined">equal</span>
+                </mat-button-toggle>
+                <mat-button-toggle [value]="Condition.Greater">
+                  <mat-icon aria-hidden="false" aria-label="Greater">arrow_forward_ios</mat-icon>
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+            <div class="mt-3 d-flex justify-content-end">
+              <button class="btn btn-primary m-2">Search</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="card p-2 table mt-2">
+        <app-data-table #dataTableComponent [records]="dataSource" [columns]="columns"
+          (recordDeleteEvent)="onRecordDeleted($event)" 
+          (recordUpdateEvent)="onRecordUpdate($event)"
+          (selectedRowsChanged)="onSelectedRowsChanged($event)">
+        </app-data-table>
+        <mat-divider></mat-divider>
+        <app-paginator class="mt-2" [length]="totalRecords" [pageSize]="pageSize" [pageIndex]="currentPage"
+          (pageChange)="onPageChange($event)">
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+
+</div>

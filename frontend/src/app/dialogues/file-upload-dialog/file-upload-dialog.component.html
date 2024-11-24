@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+  <div class="m-3">
+    <label class="form-label" for="customFile">{{ data.message }}</label>
+    <input type="file" class="form-control" id="customFile" (change)="onFileChange($event)" />
+    <div *ngIf="errorMessage" class="text-danger mt-2">{{ errorMessage }}</div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onReturn()">{{ data.returnBtn }}</button>
+  <button mat-button [disabled]="!isValid" color="warn" (click)="onConfirm()">{{ data.confirmBtn }}</button>
+</mat-dialog-actions>

@@ -1,0 +1,82 @@
+<div class="container-fluid">
+    <div class="card bg-light mx-auto" style="max-width: 21rem;">
+        <div class="card-header">{{formTitle}}</div>
+        <div class="card-body d-flex justify-content-center">
+            <form [formGroup]="recordForm" #formDirective="ngForm" (ngSubmit)="onSubmit(recordForm, formDirective)"
+                novalidate>
+                <div class="mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName">
+                        <mat-icon matSuffix>
+                            <span class="material-symbols-outlined">id_card</span>
+                        </mat-icon>
+                        <mat-error *ngIf="isInvalidAndTouchedOrSubmitted('firstName')">
+                            <span *ngIf="formControls['firstName'].errors?.['required']">{{ requiredErrorMessage
+                                }}</span>
+                            <span *ngIf="formControls['firstName'].errors?.['pattern']">{{ invalidNameErrorMessage
+                                }}</span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName">
+                        <mat-icon matSuffix>
+                            <span class="material-symbols-outlined">id_card</span>
+                        </mat-icon>
+                        <mat-error *ngIf="isInvalidAndTouchedOrSubmitted('lastName')">
+                            <span *ngIf="formControls['lastName'].errors?.['required']">{{ requiredErrorMessage
+                                }}</span>
+                            <span *ngIf="formControls['lastName'].errors?.['pattern']">{{ invalidNameErrorMessage
+                                }}</span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email">
+                        <mat-icon matSuffix>alternate_email</mat-icon>
+                        <mat-error *ngIf="isInvalidAndTouchedOrSubmitted('email')">
+                            <span *ngIf="formControls['email'].errors?.['required']">{{ requiredErrorMessage }}</span>
+                            <span *ngIf="formControls['email'].errors?.['pattern']">{{ invalidEmailErrorMessage
+                                }}</span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+                        <mat-error *ngIf="isInvalidAndTouchedOrSubmitted('dateOfBirth')">
+                            <span *ngIf="formControls['dateOfBirth'].errors?.['required']">{{ requiredErrorMessage
+                                }}</span>
+                        </mat-error>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-radio-group aria-label="Select an option" formControlName="gender">
+                        <mat-radio-button value="M">male</mat-radio-button>
+                        <mat-radio-button value="F">female</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-error *ngIf="isInvalidAndTouchedOrSubmitted('gender')">
+                        <span *ngIf="formControls['gender'].errors?.['required']">{{ requiredErrorMessage }}</span>
+                    </mat-error>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="d-flex justify-content-center mt-2">
+                    <button class="btn btn-primary m-2" type="submit" [disabled]="recordForm.invalid">Save</button>
+                    <button (click)="onCancel()" class="btn btn-outline-danger m-2">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
